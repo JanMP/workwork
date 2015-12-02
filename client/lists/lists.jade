@@ -1,0 +1,22 @@
+template(name="lists")
+  .container
+    h1 lists
+    .button-bar
+      +newModalButton(collection="Projects")
+    each projects
+      +displayProject
+
+template(name="displayProject")
+  div
+    .card-panel
+      .row
+        .col-sm-10 #{name}
+        .col-sm-2.text-right
+          +newModalButton(collection="Tasks" doc=newProjectTask)
+    .subset
+      +sortable(items=projectTasks options=taskSortableOptions sortField="order" projectId=_id)
+        .card-panel.draggable
+          i.fa.fa-arrows.handle.pull-right
+          p Name: #{name} Order: #{order}
+
+

@@ -1,0 +1,55 @@
+template(name="taskTimer")
+  .container
+    +taskTimerRack
+    .button-bar
+      +newModalButton(collection="taskTimers" doc=newTaskTimer)
+
+
+template(name="taskTimerRack")
+  each taskTimers
+    +taskTimerDisplay
+
+template(name="taskTimerDisplay")
+  .card-panel
+    .row
+      .col-sm-5.text-center
+        .task-title #{task}
+      .col-sm-5.text-center
+        .clock #{elapsedTime}
+        if active
+          .btn-group
+            button.button.btn.btn-success.btn-shadowed#playButton
+              i.fa.fa-play
+            button.button.btn.btn-warning.btn-shadowed#pauseButton
+              i.fa.fa-pause
+            button.button.btn.btn-danger.btn-shadowed#stopButton
+              i.fa.fa-stop
+      .col-sm-2.text-right
+        button.button.btn.btn-round.btn-shadowed.btn-danger#removeButton
+          i.fa.fa-minus
+
+template(name="logs")
+  .container
+    +taskTimerLog
+
+template(name="taskTimerLog")
+  .container
+    h1 task-timer logs
+    table.table
+      thead
+        tr
+          th Start
+          th End
+          th Task
+          th Duration
+      tbody
+        each taskTimers
+          +taskTimerRow
+
+template(name="taskTimerRow")
+  tr
+    td #{formatStart}
+    td #{formatEnd}
+    td #{task}
+    td #{formatDuration}
+        
