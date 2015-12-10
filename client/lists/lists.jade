@@ -2,7 +2,7 @@ template(name="lists")
   .container
     h1 lists
     .button-bar
-      +newModalButton(collection="Projects")
+      +newModalButton(collection="Projects" title="New Project")
     each projects
       +displayProject
 
@@ -10,13 +10,25 @@ template(name="displayProject")
   div
     .card-panel
       .row
-        .col-sm-10 #{name}
-        .col-sm-2.text-right
-          +newModalButton(collection="Tasks" doc=newProjectTask)
+        .col-sm-8 #{name}
+        .col-sm-4.text-right
+          +editModalButton(collection="Projects" doc=_id)
+          +removeModalButton(collection="Projects" doc=_id)
+          +newModalButton(collection="Tasks" doc=newProjectTask title="New Task")
     .subset
-      +sortable(items=projectTasks options=taskSortableOptions sortField="order" projectId=_id)
-        .card-panel.draggable
-          i.fa.fa-arrows.handle.pull-right
-          p Name: #{name} Order: #{order}
+      +sortable(items=projectTasks options=taskSortableOptions projectId=_id)
+        +displayTask        
+
+template(name="displayTask")
+  .card-panel.draggable(data-id=_id)
+    .row
+      .col-sm-2
+        i.fa.fa-arrows.handle.btn.btn-default
+      .col-sm-6
+        p #{order}. Name: #{name}
+        p Date: #{dateDoMoment}
+      .col-sm-4.text-right
+        +editModalButton(collection="Tasks" doc=_id)
+        +removeModalButton(collection="Tasks" doc=_id)
 
 

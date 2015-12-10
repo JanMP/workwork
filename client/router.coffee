@@ -22,6 +22,7 @@ FlowRouter.route "/settings",
   action : ->
     BlazeLayout.render "layout",
       content : "settings"
+    #Meteor.call "mockup"
 
 FlowRouter.route "/help",
   action : ->

@@ -1,9 +1,19 @@
 template(name="newModalButton")
-  +afModal(class="button btn btn-round btn-shadowed2 btn-success" collection=collection operation="insert" doc=doc)
+  +afModal(class="button btn btn-default" collection=collection operation="insert" doc=doc title=title)
     span
-      i.fa.fa-lg.fa-plus
+      i.fa.fa-lg.fa-fw.fa-plus
+
+template(name="editModalButton")
+  +afModal(class="button btn btn-default" collection=collection operation="update" doc=doc title=title)
+    span
+      i.fa.fa-lg.fa-fw.fa-edit
+
+template(name="removeModalButton")
+  +afModal(class="button btn btn-default" collection=collection operation="remove" doc=doc title=title)
+    span
+      i.fa.fa-lg.fa-fw.fa-trash
     
 template(name="newButton")
   button.button.btn.btn-round.btn-shadowed2.btn-success(id=id)
     span
-      i.fa.fa-lg.fa-plus
+      i.fa.fa-lg.fa-fw.fa-plus

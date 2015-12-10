@@ -8,6 +8,9 @@ Projects.attachSchema new SimpleSchema
     autoform :
       type : "hidden"
 
+@newProject = (name = "new Project")->
+  name : name
+
 
 @Tasks = new Mongo.Collection "tasks"
 Tasks.attachSchema new SimpleSchema
@@ -30,11 +33,14 @@ Tasks.attachSchema new SimpleSchema
     type : Boolean
     optional : true
     label : "on Master Action List"
+    autoform :
+      type : "hidden"
   dateDo :
     type : Date
     optional : true
     autoform :
-      type : "hidden"
+      afFieldInput :
+        type : "bootstrap-datetimepicker"
   dateDone :
     type : Date
     optional : true
@@ -46,12 +52,18 @@ Tasks.attachSchema new SimpleSchema
     autoform :
       type : "hidden"
 
-@newTask = (project="none") ->
-  # name : "new Task"
+findOrder = (project) ->
+  Tasks.findOne project : project,
+    sort :
+      order : -1
+    limit : 1
+  ?.order + 1 or 0
+
+@newTask = (project="none", name = "newTask") ->
+  name : name
   project : project
   status : "fresh"
-  order : Tasks.find({project : project}).count() + 1
-
+  order : findOrder project
 
 @TaskTimers = new Mongo.Collection "taskTimers"
 TaskTimers.attachSchema new SimpleSchema
